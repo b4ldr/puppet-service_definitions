@@ -1,16 +1,14 @@
 Puppet::Type.type(:service_definition).provide(:nix) do
-
   mk_resource_methods
 
   def self.parse_services
-    services = Hash.new {
-      |h, k|
+    services = Hash.new do |h, k|
       h[k] = {
         protocols: [],
         description: nil,
-        aliases: []
+        aliases: [],
       }
-    }
+    end
     pattern = %r{(\w+)\s+(\d+)/(udp|tcp|ddp)\s+([^#]+)?(?:#\s+(.*))?}
     File.open('/etc/services') do |f|
       f.each_line do |line|
@@ -26,7 +24,7 @@ Puppet::Type.type(:service_definition).provide(:nix) do
   end
 
   def self.instances
-    parse_services.collect do |key, properties|
+    parse_services.map do |key, properties|
       service = {}
       service[:provider] = :nix
       service[:ensure] = :present
@@ -41,7 +39,7 @@ Puppet::Type.type(:service_definition).provide(:nix) do
 
   def self.prefetch(resources)
     instances.each do |prov|
-      if resource = resources[prov.name]
+      if resource = resources[prov.name] # rubocop:disable Lint/AssignmentInCondition
         resource.provider = prov
       end
     end
@@ -51,7 +49,7 @@ Puppet::Type.type(:service_definition).provide(:nix) do
     content = ''
     IO.readlines('/etc/services').each do |line|
       # if we manage the service delete it then write it at the bottom
-      content += line unless line.match?(/^#{resource[:name]}\b/)
+      content += line unless line.match?(%r{^#{resource[:name]}\b})
     end
     resource[:protocols].each do |protocol|
       content += "#{resource[:name]}\t#{resource[:port]}/#{protocol}"
@@ -64,7 +62,7 @@ Puppet::Type.type(:service_definition).provide(:nix) do
     end
   end
 
-  def initialize(value={})
+  def initialize(value = {})
     super(value)
     @property_flush = {}
   end
@@ -80,5 +78,4 @@ Puppet::Type.type(:service_definition).provide(:nix) do
   def destroy
     @property_flush[:ensure] = :absent
   end
-
 end

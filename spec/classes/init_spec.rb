@@ -5,47 +5,47 @@ describe 'service_definitions' do
     {
       services: {
         'testtcp' => {
-          'port' => 65001,
-          'protocols' => ['tcp']
+          'port' => 65_001,
+          'protocols' => ['tcp'],
         },
         'testudp' => {
-          'port' => 65002,
-          'protocols' => ['udp']
+          'port' => 65_002,
+          'protocols' => ['udp'],
         },
         'testddp' => {
-          'port' => 65003,
-          'protocols' => ['ddp']
+          'port' => 65_003,
+          'protocols' => ['ddp'],
         },
         'testudptcp' => {
-          'port' => 65004,
-          'protocols' => ['udp', 'tcp']
+          'port' => 65_004,
+          'protocols' => ['udp', 'tcp'],
         },
         'testdescr' => {
-          'port' => 65005,
+          'port' => 65_005,
           'protocols' => ['udp', 'tcp'],
-          'description' => 'test decsription'
+          'description' => 'test decsription',
         },
         'testalias1' => {
-          'port' => 65006,
+          'port' => 65_006,
           'protocols' => ['udp', 'tcp'],
-          'aliases' => ['test1']
+          'aliases' => ['test1'],
         },
         'testalias2' => {
-          'port' => 65007,
-          'protocols' => ['udp', 'tcp'],
-          'aliases' => ['test1', 'test2']
-        },
-        'testall' => {
-          'port' => 65008,
+          'port' => 65_007,
           'protocols' => ['udp', 'tcp'],
           'aliases' => ['test1', 'test2'],
-          'description' => 'test decsription all'
-        }
-      }
+        },
+        'testall' => {
+          'port' => 65_008,
+          'protocols' => ['udp', 'tcp'],
+          'aliases' => ['test1', 'test2'],
+          'description' => 'test decsription all',
+        },
+      },
     }
   end
 
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, _facts|
     context "on #{os}" do
       context 'with default params' do
         it { is_expected.to compile.with_all_deps }

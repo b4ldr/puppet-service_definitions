@@ -3,7 +3,7 @@ Puppet::Type.newtype(:service_definition) do
 
   ensurable
 
-  newparam(:name, :namevar => true) do
+  newparam(:name, namevar: true) do
     desc 'Name of the service'
     munge do |value|
       value.downcase
@@ -12,24 +12,24 @@ Puppet::Type.newtype(:service_definition) do
 
   newproperty(:port) do
     desc 'Port the service listens on'
-    newvalues(/^\d+$/)
+    newvalues(%r{^\d+$})
   end
 
   newproperty(:description) do
-    desc "Description of the service"
+    desc 'Description of the service'
   end
 
   newproperty(:aliases, array_matching: :all) do
-    desc "Service aliases"
-    newvalues(/^\w+$/)
+    desc 'Service aliases'
+    newvalues(%r{^\w+$})
     def insync?(is)
       is.sort == should.sort
     end
   end
 
   newproperty(:protocols, array_matching: :all) do
-    desc "list of tcp, udp or ddp supported by this service"
-    newvalues(/udp|tcp|ddp/)
+    desc 'list of tcp, udp or ddp supported by this service'
+    newvalues(%r{udp|tcp|ddp})
     munge do |value|
       value.downcase
     end
