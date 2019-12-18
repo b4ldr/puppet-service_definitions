@@ -5,21 +5,21 @@ service_definition{'foobar':
     aliases     => ['leet','hacker']
 }
 service_definition{'testudp':
-    port        => 2222,
-    protocols   => ['udp'],
+    port      => 2222,
+    protocols => ['udp'],
 }
 service_definition{'testtcp':
-    port        => 3333,
-    protocols   => ['tcp'],
+    port      => 3333,
+    protocols => ['tcp'],
 }
 service_definition{'testddp':
-    port        => 4444,
-    protocols   => ['ddp'],
+    port      => 4444,
+    protocols => ['ddp'],
 }
 service_definition{'testalias':
-    port        => 5555,
-    protocols   => ['udp'],
-    aliases => ['foobar'],
+    port      => 5555,
+    protocols => ['udp'],
+    aliases   => ['foobar'],
 }
 service_definition{'testdescr':
     port        => 6666,
