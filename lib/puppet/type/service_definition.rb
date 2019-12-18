@@ -21,6 +21,7 @@ Puppet::Type.newtype(:service_definition) do
 
   newproperty(:aliases, array_matching: :all) do
     desc "Service aliases"
+    newvalues(/^\w+$/)
     def insync?(is)
       is.sort == should.sort
     end
