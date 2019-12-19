@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Puppet::Type.type(:service_definition).provide(:nix) do
   mk_resource_methods
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Puppet::Type.newtype(:service_definition) do
   desc 'Puppet type to manage entries in /etc/services'
 

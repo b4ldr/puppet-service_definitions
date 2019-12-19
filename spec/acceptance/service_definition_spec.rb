@@ -45,7 +45,7 @@ describe 'service_definition resource' do
       '^testtcp\s+65002/tcp$',
       '^testddp\s+65003/ddp$',
       '^testalias\s+65004/udp\s+foobar$',
-      '^testdescr\s+65005/tcp\s+# foobar$'
+      '^testdescr\s+65005/tcp\s+# foobar$',
     ].each do |pattern|
       describe command("grep -cE '#{pattern}' /etc/services") do
         its(:exit_status) { is_expected.to eq 0 }
