@@ -51,11 +51,13 @@ Puppet::Type.type(:service_definition).provide(:nix) do
       # if we manage the service delete it then write it at the bottom
       content += line unless line.match?(%r{^#{resource[:name]}\b})
     end
-    resource[:protocols].each do |protocol|
-      content += "#{resource[:name]}\t#{resource[:port]}/#{protocol}"
-      content += "\t#{resource[:aliases].join(' ')}" if resource[:aliases]
-      content += "\t# #{resource[:description]}" if resource[:description]
-      content += "\n"
+    if resource[:ensure] == :present
+      resource[:protocols].each do |protocol|
+        content += "#{resource[:name]}\t#{resource[:port]}/#{protocol}"
+        content += "\t#{resource[:aliases].join(' ')}" if resource[:aliases]
+        content += "\t# #{resource[:description]}" if resource[:description]
+        content += "\n"
+      end
     end
     File.open('/etc/services', 'w') do |f|
       f.puts content
